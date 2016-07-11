@@ -8,7 +8,7 @@ namespace VelocityMail
 {
     /// <summary>
     /// Templated mail message. This class is independant of the templating engine.
-    /// The Velocity-specific parts are in <see cref="VelocityMailParser"/>
+    /// The Velocity-specific parts are in <see cref="SystemNetMailMessageAdapter"/>
     /// </summary>
     public class VelocityMailMessage : IDisposable
     {

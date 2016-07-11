@@ -10,9 +10,10 @@ using VelocityMail.Logging;
 namespace VelocityMail
 {
     /// <summary>
-    /// Velocity-specific parsing of a VelocityMailMessage into a System.Mail.MailMessage
+    /// Creates a System.Net.Mail.MailMessage which can be sent from the SmtpClient from
+    /// a VelocityMailMessage.
     /// </summary>
-    public static class VelocityMailParser
+    public static class SystemNetMailMessageAdapter
     {
         /// <summary>
         /// Logging

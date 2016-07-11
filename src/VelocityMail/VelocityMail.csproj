@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VelocityMail</RootNamespace>
     <AssemblyName>VelocityMail</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,7 +57,7 @@
     <Compile Include="Service\VelocityMailService.cs" />
     <Compile Include="VelocityEngineFactory.cs" />
     <Compile Include="VelocityMailMessage.cs" />
-    <Compile Include="VelocityMailParser.cs" />
+    <Compile Include="SystemNetMailMessageAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
