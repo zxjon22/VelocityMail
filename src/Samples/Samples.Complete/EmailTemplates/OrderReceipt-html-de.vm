@@ -1,0 +1,80 @@
+﻿#parse( "Header-html.vm" )
+
+<b>BESTELLBESTÄTIGUNG</b><br/><br/>  
+  
+Sehr geehrte/r ${name},<br/>
+<br/>
+ 
+im Folgenden sehen Sie die Einzelheiten zu der Bestellung, die Sie vor kurzem über das <b>Mushrooms 'R' Us </b> website aufgegeben haben.<br/><br/>
+
+<b>Bestellangaben</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="formview" style="width:100%">
+<tr>
+  <th style="width:10em">Bestellnr.:</th>
+  <td><p>${order.Id}</p></td></tr>
+<tr>
+  <th>Bestelldatum &amp; Uhrzeit: </th>
+  <td>${order.OrderDate}</td>
+</tr>
+</table>
+<br/>
+<b>Lieferangaben</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="formview" style="width:100%">
+<tr>
+  <th style="width:10em">Name des Adresse: </th>
+  <td>${order.Address.Name}</td>
+</tr>
+<tr valign="top">
+  <th>Adresse: </th>
+  <td>
+  $!{order.Address.Line1}<br/>
+  $!{order.Address.Line2}<br/>
+  $!{order.Address.Town}<br/>
+  $!{order.Address.County}<br/>
+  $!{order.Address.PostalCode}
+  </td>
+</tr>
+</table>
+<br/>
+<b>Überblick über die bestellten Produkte:</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="standard" style="width:100%">
+<tr>
+	<th style="text-align: left">Produktcode</th>
+	<th style="text-align: left">Bezeichnung</th>
+	<th>Stückzahl</th>
+	<th style="text-align: right">Preis</th>
+	<th style="text-align: left">Lieferzeit</th>
+	<th style="text-align: left">Zahlungsweise</th>		
+</tr>
+#foreach($i in $order.OrderItems)
+<tr>
+	<td>${i.ProductCode}</td>
+	<td>${i.Description}</td>
+	<td style="text-align: center">${i.Quantity}</td>
+	<td style="text-align: right">${i.Price.ToString("C", $currencyFormatter)}</td>
+	<td>$!{i.Delivery}</td>
+	<td>
+	#if($i.PaymentType == "Normal")
+		Geschäftskonto
+	#elseif ($i.PaymentType == "PersonalCard")
+		Private Karte
+	#end
+	</td>	
+</tr>
+#end
+
+</table>
+
+#if( $order.AmountPaidByCard > 0 )
+<br/>
+Gesamtbetrag, der mit privater Karte bezahlt wird
+<b>${order.AmountPaidByCard.ToString("C", $currencyFormatter)}</b>.
+
+Ihre Karte wurde mit diesem Betrag belastet<br/>(ref. <b>$order.TransactionCode</b>).
+<br/>
+#end
+
+<br/>
+Vielen Dank für Ihre Bestellung.
+
+#parse( "Footer-html.vm" )

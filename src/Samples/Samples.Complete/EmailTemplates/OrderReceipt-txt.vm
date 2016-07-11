@@ -1,0 +1,49 @@
+﻿#set($width = 59)
+
+ORDER RECEIPT
+  
+Dear $name,
+ 
+Please find below the details of the order you recently placed on the Mushrooms 'R'
+Us website.
+
+ORDER DETAILS
+
++--------------------+-------------------------------------------------------------+
+| Order No:          | $st.AlignLeft($order.Id,$width) |
++--------------------+-------------------------------------------------------------+
+| Order Date & Time: | $st.AlignLeft($order.OrderDate, $width) |
++--------------------+-------------------------------------------------------------+
+
+DELIVERY DETAILS
+
++--------------------+-------------------------------------------------------------+
+| Address Name:      | $st.AlignLeft($order.Address.Name, $width) |
++--------------------+-------------------------------------------------------------+
+| Address:           | $!st.AlignLeft($!order.Address.Line1, $width) |
+|                    | $!st.AlignLeft($!order.Address.Line2, $width) |
+|                    | $!st.AlignLeft($!order.Address.Town, $width) |
+|                    | $!st.AlignLeft($!order.Address.County, $width) |
+|                    | $!st.AlignLeft($!order.Address.PostalCode, $width) |
++--------------------+-------------------------------------------------------------+
+
+Below are the products that you requested:
+
++---------------------------------+----------+---------+-----------+---------------+
+| Product                         | Quantity |  Price  | Lead Time | Payment Type  |
++---------------------------------+----------+---------+-----------+---------------+
+#foreach($i in $order.OrderItems)
+| $st.AlignLeft($i.ProductCode,31) |          |         |           |               |
+| $st.AlignLeft($i.Description,31) | $st.AlignRight($i.Quantity,8) | $st.AlignRight($i.Price.ToString("C", $currencyFormatter), 7) | $!st.AlignRight($!i.Delivery, 9) | #if($i.PaymentType == "Normal")Account      #elseif ($i.PaymentType == "PersonalCard")Personal Card#end |
++---------------------------------+----------+---------+-----------+---------------+
+#end
+
+#if( $order.AmountPaidByCard > 0 )
+The total cost of the products to be paid for by personal card was $order.AmountPaidByCard.ToString("C", $currencyFormatter).
+
+This was debited to your card (ref. $order.TransactionCode).
+#end
+
+Thank you for your order.
+
+--

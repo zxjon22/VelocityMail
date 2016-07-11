@@ -1,0 +1,80 @@
+﻿#parse( "Header-html.vm" )
+
+<b>ORDER RECEIPT</b><br/><br/>  
+  
+Dear ${name},<br/>
+<br/>
+ 
+Please find below the details of the order you recently placed on the <b>Mushrooms 'R' Us </b> website.<br/><br/>
+
+<b>Order Details</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="formview" style="width:100%">
+<tr>
+  <th style="width:10em">Order No:</th>
+  <td><p>${order.Id}</p></td></tr>
+<tr>
+  <th>Order Date &amp; Time: </th>
+  <td>${order.OrderDate}</td>
+</tr>
+</table>
+<br/>
+<b>Delivery Details</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="formview" style="width:100%">
+<tr>
+  <th style="width:10em">Address Name: </th>
+  <td>${order.Address.Name}</td>
+</tr>
+<tr valign="top">
+  <th>Address: </th>
+  <td>
+  $!{order.Address.Line1}<br/>
+  $!{order.Address.Line2}<br/>
+  $!{order.Address.Town}<br/>
+  $!{order.Address.County}<br/>
+  $!{order.Address.PostalCode}
+  </td>
+</tr>
+</table>
+<br/>
+<b>Below are the products that you requested:</b><br/><br/>
+<table border="0" cellpadding="0" cellspacing="0" class="standard" style="width:100%">
+<tr>
+	<th style="text-align: left">Product Code</th>
+	<th style="text-align: left">Description</th>
+	<th>Quantity</th>
+	<th style="text-align: right">Price</th>
+	<th style="text-align: left">Lead Time</th>
+	<th style="text-align: left">Payment Type</th>		
+</tr>
+#foreach($i in $order.OrderItems)
+<tr>
+	<td>${i.ProductCode}</td>
+	<td>${i.Description}</td>
+	<td style="text-align: center">${i.Quantity}</td>
+	<td style="text-align: right">${i.Price.ToString("C", $currencyFormatter)}</td>
+	<td>$!{i.Delivery}</td>
+	<td>
+	#if($i.PaymentType == "Normal")
+		Account
+	#elseif ($i.PaymentType == "PersonalCard")
+		Personal Card
+	#end
+	</td>	
+</tr>
+#end
+
+</table>
+
+#if( $order.AmountPaidByCard > 0 )
+<br/>
+The total cost of the products to be paid for by personal card was
+<b>${order.AmountPaidByCard.ToString("C", $currencyFormatter)}</b>.
+
+This was debited to your card<br/>(ref. <b>$order.TransactionCode</b>).
+<br/>
+#end
+
+<br/>
+Thank you for your order.
+
+#parse( "Footer-html.vm" )

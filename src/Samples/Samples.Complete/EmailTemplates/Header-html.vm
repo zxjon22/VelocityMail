@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>e-mail</title>
+<style type="text/css">
+body {font-family:Arial, Helvetica, sans-serif; font-size:9pt;}
+table { border-collapse: collapse; }
+table.formview th, table.formview td, table.standard th, table.standard td { border: 1px solid #ccc; padding: 2px 2px 2px 2px; }
+table.formview th { padding-right: 1em; text-align: left; background-color: #eee; }
+table.standard th { background-color: #eee; text-align: center;}
+img.float-left { float: left; padding: 1em 1em; padding-left: 0;}
+li { margin-top: 0.25em; margin-bottom:0.25em; }
+</style>
+</head>
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0" width="700">
+<tr valign="top">
+<td style="font-family:Arial, Helvetica, sans-serif; font-size:9pt">
+<br/>
+<!-- BEGIN_CONTENT -->

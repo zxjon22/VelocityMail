@@ -1,0 +1,3 @@
+﻿Welcome $name. This is a simple example showing today's date: $today.ToShortDateString()
+
+This is the default fallback template (since it has no language suffix).

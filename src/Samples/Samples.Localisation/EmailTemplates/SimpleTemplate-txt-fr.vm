@@ -1,0 +1,3 @@
+﻿Bienvenue $name.
+
+Ceci est un exemple simple montrant la date d'aujourd'hui: $today.ToShortDateString()

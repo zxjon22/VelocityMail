@@ -1,0 +1,49 @@
+﻿#set($width = 57)
+
+BESTELLBESTÄTIGUNG
+  
+Sehr geehrte/r $name,
+ 
+im Folgenden sehen Sie die Einzelheiten zu der Bestellung, die Sie vor kurzem über
+das Mushrooms 'R' Us website aufgegeben haben.
+
+Bestellangaben
+
++-------------------------+-----------------------------------------------------------+
+| Bestellnr.:             | $st.AlignLeft($order.Id,$width) |
++ ------------------------+-----------------------------------------------------------+
+| Bestelldatum & Uhrzeit: | $st.AlignLeft($order.OrderDate, $width) |
++ ------------------------+-----------------------------------------------------------+
+
+Lieferangaben
+
++-------------------------+-----------------------------------------------------------+
+| Name des Adresse:       | $st.AlignLeft($order.Address.Name, $width) |
++ ------------------------+-----------------------------------------------------------+
+| Adresse:                | $!st.AlignLeft($!order.Address.Line1, $width) |
+|                         | $!st.AlignLeft($!order.Address.Line2, $width) |
+|                         | $!st.AlignLeft($!order.Address.Town, $width) |
+|                         | $!st.AlignLeft($!order.Address.County, $width) |
+|                         | $!st.AlignLeft($!order.Address.PostalCode, $width) |
++-------------------------+-----------------------------------------------------------+
+
+Überblick über die bestellten Produkte:
+
++---------------------------------+-----------+---------+------------+----------------+
+| Produkt                         | Stückzahl |  Preis  | Lieferzeit | Zahlungsweise  |
++ --------------------------------+-----------+---------+------------+----------------+
+#foreach($i in $order.OrderItems)
+| $st.AlignLeft($i.ProductCode,31) |           |         |            |                |
+| $st.AlignLeft($i.Description,31) | $st.AlignRight($i.Quantity,9) | $st.AlignRight($i.Price.ToString("C", $currencyFormatter), 7) | $!st.AlignRight($!i.Delivery, 10) | #if($i.PaymentType == "Normal")Geschäftskonto#elseif ($i.PaymentType == "PersonalCard")Private Karte #end |
++ --------------------------------+-----------+---------+------------+----------------+
+#end
+
+#if( $order.AmountPaidByCard > 0 )
+Gesamtbetrag, der mit privater Karte bezahlt wird $order.AmountPaidByCard.ToString("C", $currencyFormatter).
+
+Ihre Karte wurde mit diesem Betrag belastet (ref. $order.TransactionCode).
+#end
+
+Vielen Dank für Ihre Bestellung.
+
+--
