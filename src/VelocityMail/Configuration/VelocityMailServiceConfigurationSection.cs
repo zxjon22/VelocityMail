@@ -37,17 +37,6 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
-        /// Url of the any website using the service. This value is available inside mail templates
-        /// via the ${wwwroot} variable.
-        /// </summary>
-        [ConfigurationProperty("siteUrl", IsRequired = false)]
-        public string SiteUrl
-        {
-            get { return (string)base["siteUrl"]; }
-            set { base["siteUrl"] = value; }
-        }
-
-        /// <summary>
         /// Name of the assembly which holds the e-mail templates as
         /// resources. If this field is missing, it is assumed |templatesPath|
         /// is a file system path. This and/or |templatesPath| must be set unless you are
@@ -94,6 +83,16 @@ namespace VelocityMail.Configuration
         {
             get { return (string)base["defaultFrom"]; }
             set { base["defaultFrom"] = value; }
+        }
+
+        /// <summary>
+        /// Collection of global variables that are made available to all contexts automatically
+        /// </summary>
+        [ConfigurationProperty("globalVars", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(GlobalVarCollection), AddItemName = "add")]
+        public GlobalVarCollection GlobalVariables
+        {
+            get { return base["globalVars"] as GlobalVarCollection; }
         }
 
         /// <summary>

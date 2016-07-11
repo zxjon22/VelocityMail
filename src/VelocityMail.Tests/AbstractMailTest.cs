@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Mail;
 using System.Threading;
 using netDumbster.smtp;
@@ -51,6 +52,19 @@ namespace VelocityMail.Tests
         protected SimpleSmtpServer smtpServer;
 
         /// <summary>
+        /// Gets the path on disk to the folder containing the
+        /// assets.
+        /// </summary>
+        protected string AssetsDir
+        {
+            get
+            {
+                var path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+                return Path.Combine(path, "Assets");
+            }
+        }
+
+        /// <summary>
         /// Creates a new SmtpClient configured to send to the correct port
         /// for the current test
         /// </summary>
@@ -58,6 +72,16 @@ namespace VelocityMail.Tests
         public SmtpClient CreateSmtpClient()
         {
             return new SmtpClient("localhost", this.smtpPort);
+        }
+
+        /// <summary>
+        /// Gets the path to the specified asset on disk
+        /// </summary>
+        /// <param name="assetName">File name of the asset to get the path to.</param>
+        /// <returns>Full path to the asset</returns>
+        public string GetAssetPath(string assetName)
+        {
+            return Path.Combine(this.AssetsDir, assetName);
         }
     }
 }

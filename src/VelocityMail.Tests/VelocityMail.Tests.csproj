@@ -50,6 +50,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -75,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractMailTest.cs" />
+    <Compile Include="Configuration\ConfigurationTests.cs" />
     <Compile Include="Helpers\netDumbsterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateLocationTests.cs" />
@@ -83,10 +85,14 @@
     <None Include="App.config" />
     <EmbeddedResource Include="Assets\Embedded\SimpleEmbedded-txt.vm" />
     <EmbeddedResource Include="Assets\Embedded\SearchPriority-txt.vm" />
+    <EmbeddedResource Include="Assets\Embedded\GlobalVars-txt.vm" />
     <None Include="Assets\OnDisk\SearchPriority-txt.vm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Assets\OnDisk\SimpleOnDisk-txt.vm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Configuration\GlobalVars.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

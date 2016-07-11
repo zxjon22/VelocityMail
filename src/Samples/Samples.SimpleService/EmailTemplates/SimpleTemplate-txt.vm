@@ -1,6 +1,6 @@
 ﻿Welcome $name. This is a simple example showing today's date: $today.ToShortDateString()
 
-\$wwwroot is automatically set to the value of siteUrl in the configuration section, if
-it exists.
+\$siteUrl is automatically set to the value of siteUrl in the globalVars collection in
+configuration section, if it exists.
 
-Hence you can click here: ${wwwroot}mylink
+Hence you can click here: ${siteUrl}mylink

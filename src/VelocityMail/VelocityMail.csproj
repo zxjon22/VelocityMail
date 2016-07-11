@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\GlobalVarElement.cs" />
     <Compile Include="Configuration\MailAddressRewriteRuleCollection.cs" />
     <Compile Include="Configuration\MailAddressRewriteRuleElement.cs" />
     <Compile Include="Configuration\MailServiceMode.cs" />

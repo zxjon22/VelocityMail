@@ -66,6 +66,7 @@ namespace VelocityMail.Service
             }
 
             this.Settings = settings;
+            this.SmtpClientFactory = () => new SmtpClient();
         }
 
 
@@ -78,6 +79,12 @@ namespace VelocityMail.Service
         /// Service settings
         /// </summary>
         public VelocityMailServiceConfigurationSection Settings { get; set; }
+
+        /// <summary>
+        /// Factory method to create an SmtpClient when sending an e-mail. By default, simply
+        /// news an SmtpClient with the configuration from (Web|App).config
+        /// </summary>
+        public Func<SmtpClient> SmtpClientFactory { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="VelocityMailMessage"/> and installs some application-wide
@@ -168,7 +175,7 @@ namespace VelocityMail.Service
                         mmsg.Bcc.Add(this.Settings.GlobalBcc);
                     }
 
-                    using (var sender = new SmtpClient())
+                    using (var sender = this.SmtpClientFactory())
                     {
                         sender.Send(mmsg);
                     }
@@ -206,9 +213,9 @@ namespace VelocityMail.Service
         /// data.</remarks>
         protected virtual void InstallGlobalContextData(VelocityMailMessage msg)
         {
-            if (!string.IsNullOrEmpty(this.Settings.SiteUrl))
+            foreach (GlobalVarElement gvar in this.Settings.GlobalVariables)
             {
-                msg.Put("wwwroot", this.Settings.SiteUrl);
+                msg.Put(gvar.Name, gvar.Value);
             }
         }
 
