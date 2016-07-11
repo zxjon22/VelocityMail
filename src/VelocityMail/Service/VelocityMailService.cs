@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Text.RegularExpressions;
 using NVelocity.App;
 using VelocityMail.Configuration;
+using VelocityMail.Logging;
 
 namespace VelocityMail.Service
 {
@@ -69,6 +70,10 @@ namespace VelocityMail.Service
             this.SmtpClientFactory = () => new SmtpClient();
         }
 
+        /// <summary>
+        /// Logging
+        /// </summary>
+        private static readonly ILog log = LogProvider.GetCurrentClassLogger();
 
         /// <summary>
         /// VelocityEngine instance used by this service
@@ -142,11 +147,11 @@ namespace VelocityMail.Service
             // Don't actually send any mail if the service has been disabled
             if (this.Settings.MailServiceMode == MailServiceMode.Disabled)
             {
-                /*if (msg.To.Count > 0)
+                if (msg.To.Count > 0)
                 {
-                    log.Info("Message entitled '{0}' to '{1}' not sent as MailService is disabled.",
+                    log.InfoFormat("Message entitled '{0}' to '{1}' not sent as MailService is disabled.",
                         msg.To[0], msg.Subject);
-                }*/
+                }
 
                 return;
             }
@@ -183,8 +188,8 @@ namespace VelocityMail.Service
 
                 catch (Exception ex)
                 {
-                    /*log.Error("Unable to send e-mail entitled '{0}' to '{1}",
-                        mmsg.Subject, mmsg.To[0].ToString());*/
+                    log.ErrorFormat("Unable to send e-mail entitled '{0}' to '{1}",
+                        mmsg.Subject, mmsg.To[0].ToString());
 
                     throw ex;
                 }
@@ -240,8 +245,8 @@ namespace VelocityMail.Service
 
                     if (match)
                     {
-                        /*log.Info("Address '{0}' matched '{1}'. Rewritten as '{2}'.",
-                            address.Address, rule.Pattern, rule.Replacement);*/
+                        log.InfoFormat("Address '{0}' matched '{1}'. Rewritten as '{2}'.",
+                            address.Address, rule.Pattern, rule.Replacement);
 
                         addresses[idx] = new MailAddress(rule.Replacement, address.DisplayName);
                         break;

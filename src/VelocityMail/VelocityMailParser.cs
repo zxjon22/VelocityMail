@@ -5,6 +5,7 @@ using System.Net.Mail;
 using NVelocity;
 using NVelocity.App;
 using NVelocity.Exception;
+using VelocityMail.Logging;
 
 namespace VelocityMail
 {
@@ -13,6 +14,11 @@ namespace VelocityMail
     /// </summary>
     public static class VelocityMailParser
     {
+        /// <summary>
+        /// Logging
+        /// </summary>
+        private static readonly ILog log = LogProvider.GetCurrentClassLogger();
+
         /// <summary>
         /// Parses the <see cref="VelocityMailMessage"/> and returns a <see cref="MailMessage"/>
         /// for sending.
@@ -148,10 +154,10 @@ namespace VelocityMail
             // NULL is returned to the caller
             catch (ResourceNotFoundException)
             {
-                /*if (log.IsDebugEnabled && !templateName.EndsWith("en.vm"))
+                if (log.IsDebugEnabled() && !templateName.EndsWith("en.vm"))
                 {
-                    log.Debug("Could not find e-mail template: '{0}'", templateName);
-                }*/
+                    log.DebugFormat("Could not find e-mail template: '{0}'", templateName);
+                }
             }
 
             catch (ParseErrorException pee)
