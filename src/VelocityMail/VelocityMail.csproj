@@ -52,6 +52,7 @@
     <Compile Include="Configuration\MailServiceMode.cs" />
     <Compile Include="Configuration\MatchMode.cs" />
     <Compile Include="Configuration\VelocityMailServiceConfigurationSection.cs" />
+    <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="MailPreparationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\VelocityMailService.cs" />

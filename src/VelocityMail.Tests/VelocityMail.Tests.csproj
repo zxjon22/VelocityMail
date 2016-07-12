@@ -78,6 +78,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VelocityMail\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AbstractMailTest.cs" />
     <Compile Include="Configuration\ConfigurationTests.cs" />
     <Compile Include="Helpers\netDumbsterExtensions.cs" />
