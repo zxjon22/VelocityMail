@@ -7,7 +7,7 @@
     <authors>Jonathan Needle</authors>
     <owners>Jonathan Needle</owners>
     <licenseUrl>https://github.com/zxjon22/VelocityMail/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/zxjon22/VelocityMail/blob/master/LICENSE</projectUrl>
+    <projectUrl>https://github.com/zxjon22/VelocityMail</projectUrl>
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Rich E-mail templating engine that uses Apache Velocity for formatting.</description>

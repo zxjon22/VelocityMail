@@ -181,15 +181,17 @@ namespace VelocityMail
                 return template;
             }
 
-            var writer = new StringWriter();
-            if (!engine.Evaluate(ctx, writer, typeof(VelocityMailMessage).Name, template))
+            using (var writer = new StringWriter())
             {
-                throw new MailPreparationException(
-                    "NVelocity failed to merge the TemplatedMailMessage template. " +
-                    "See log for details");
-            }
+                if (!engine.Evaluate(ctx, writer, typeof(VelocityMailMessage).Name, template))
+                {
+                    throw new MailPreparationException(
+                        "NVelocity failed to merge the TemplatedMailMessage template. " +
+                        "See log for details");
+                }
 
-            return writer.ToString();
+                return writer.ToString();
+            }
         }
     }
 }
