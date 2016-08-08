@@ -22,7 +22,18 @@ namespace VelocityMail.Configuration
         public MailServiceMode MailServiceMode
         {
             get { return (MailServiceMode)base["mode"]; }
-            set { base["Mode"] = value; }
+            set { base["mode"] = value; }
+        }
+
+        /// <summary>
+        /// Whether or not to re-write e-mail addresses according to the
+        /// <see cref="MailAddressRewriteRuleCollection"/>
+        /// </summary>
+        [ConfigurationProperty("rewriteAddresses", DefaultValue = false)]
+        public bool RewriteAddresses
+        {
+            get { return (bool)base["rewriteAddresses"]; }
+            set { base["rewriteAddresses"] = value; }
         }
 
         /// <summary>
@@ -60,17 +71,6 @@ namespace VelocityMail.Configuration
         {
             get { return (string)base["templatesPath"]; }
             set { base["templatesPath"] = value; }
-        }
-
-        /// <summary>
-        /// If false, 'TEST: ' is automatically added to the subject line of all e-mails sent
-        /// from the service. If true, no changes are made.
-        /// </summary>
-        [ConfigurationProperty("runningOnLive", IsRequired = false, DefaultValue = true)]
-        public bool RunningOnLive
-        {
-            get { return (bool)base["runningOnLive"]; }
-            set { base["runningOnLive"] = value; }
         }
 
         /// <summary>

@@ -12,9 +12,9 @@ namespace VelocityMail.Configuration
         Enabled = 0,
 
         /// <summary>
-        /// Re-writes any e-mail addresses and then sends the e-mail normally
+        /// Same as 'Enabled' but all subjects are prefixed with 'Test: '
         /// </summary>
-        EnabledWithAddressRewrite,
+        Test,
 
         /// <summary>
         /// Only logs e-mail as sent - it does not actually send any e-mail.

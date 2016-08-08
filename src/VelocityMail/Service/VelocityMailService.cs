@@ -162,14 +162,14 @@ namespace VelocityMail.Service
                 {
                     // Re-write the destination addresses according to the rewrite
                     // rules, if enabled.
-                    if (this.Settings.MailServiceMode == MailServiceMode.EnabledWithAddressRewrite)
+                    if (this.Settings.RewriteAddresses)
                     {
                         ApplyRewriteRules(mmsg.To);
                         ApplyRewriteRules(mmsg.CC);
                         ApplyRewriteRules(mmsg.Bcc);
                     }
 
-                    if (this.Settings.RunningOnLive == false)
+                    if (this.Settings.MailServiceMode == MailServiceMode.Test)
                     {
                         mmsg.Subject = "[TEST]: " + mmsg.Subject;
                     }
