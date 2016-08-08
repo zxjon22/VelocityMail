@@ -92,6 +92,12 @@
     <EmbeddedResource Include="Assets\Embedded\SimpleEmbedded-txt.vm" />
     <EmbeddedResource Include="Assets\Embedded\SearchPriority-txt.vm" />
     <EmbeddedResource Include="Assets\Embedded\GlobalVars-txt.vm" />
+    <None Include="Assets\Configuration\DisabledMode.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Configuration\TestMode.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\OnDisk\SearchPriority-txt.vm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
