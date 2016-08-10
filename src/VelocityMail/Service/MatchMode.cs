@@ -1,5 +1,5 @@
 ﻿
-namespace VelocityMail.Configuration
+namespace VelocityMail
 {
     /// <summary>
     /// Match mode for a rewrite rule.

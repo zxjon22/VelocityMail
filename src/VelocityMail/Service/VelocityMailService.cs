@@ -18,13 +18,22 @@ namespace VelocityMail.Service
         /// (Web|App).config
         /// </summary>
         public VelocityMailService()
-            : this(null)
+            : this((VelocityMailSection)null)
         {
         }
 
         /// <summary>
+        /// Creates a new <see cref="VelocityMailService"/> with the specified options.
+        /// </summary>
+        /// <param name="options">Configuration options</param>
+        public VelocityMailService(VelocityMailOptions options)
+        {
+            this.Init(options);
+        }
+
+        /// <summary>
         /// Creates a new instance of a <see cref="VelocityMailService"/> using the settings
-        /// in the given VelocityMailServiceConfigurationSection
+        /// in the given <see cref="VelocityMailSection"/>
         /// </summary>
         /// <param name="settings">Service settings. If null, the service attempts to retrieve them
         /// from (Web|App).Config</param>
@@ -40,34 +49,8 @@ namespace VelocityMail.Service
                 }
             }
 
-            // FIXME: 3 scenarios: assembly/paths/both
-
-            // Create an engine automatically based on the settings in the configuration
-            // file.
-            var assemblyFragments = settings.TemplatesAssembly.Split(',');
-
-            if (assemblyFragments.Length != 2)
-            {
-                throw new ConfigurationErrorsException("templatesAssembly must have two fragments (namespace, assembly name)");
-            }
-
-            if (string.IsNullOrWhiteSpace(settings.TemplatesPath))
-            {
-                // Just assembly resource templates
-                this.Engine = VelocityEngineFactory.Create(assemblyFragments[0].Trim(), assemblyFragments[1].Trim());
-            }
-            else
-            {
-                // Both path based and assembly based. File system path is checked first so the file system
-                // can override embedded templates in assemblies.
-                this.Engine = VelocityEngineFactory.Create(
-                    assemblyFragments[0].Trim(),
-                    assemblyFragments[1].Trim(),
-                    settings.TemplatesPath);
-            }
-
-            this.Settings = settings;
-            this.SmtpClientFactory = () => new SmtpClient();
+            var options = settings.ToMailOptions();
+            this.Init(options);
         }
 
         /// <summary>
@@ -81,15 +64,76 @@ namespace VelocityMail.Service
         public VelocityEngine Engine { get; set; }
 
         /// <summary>
-        /// Service settings
+        /// Service options
         /// </summary>
-        public VelocityMailSection Settings { get; set; }
+        public VelocityMailOptions Options { get; set; }
 
         /// <summary>
         /// Factory method to create an SmtpClient when sending an e-mail. By default, simply
         /// news an SmtpClient with the configuration from (Web|App).config
         /// </summary>
         public Func<SmtpClient> SmtpClientFactory { get; set; }
+
+        /// <summary>
+        /// Initialises the service with the specified options.
+        /// </summary>
+        /// <param name="options">Configuration options</param>
+        void Init(VelocityMailOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException("options");
+            }
+
+            bool usesEmbedded = !string.IsNullOrWhiteSpace(options.TemplatesAssembly);
+            bool usesFiles = !string.IsNullOrWhiteSpace(options.TemplatesPath);
+
+            if (!usesEmbedded && !usesFiles)
+            {
+                throw new ArgumentException("At least one of TemplatesAssembly and TemplatesPath must be set");
+            }
+
+            string namespacePrefix = null;
+            string assemblyName = null;
+
+            if (usesEmbedded)
+            {
+                var assemblyFragments = options.TemplatesAssembly.Split(',');
+
+                if (assemblyFragments.Length != 2)
+                {
+                    throw new ArgumentException("TemplatesAssembly must have two fragments (namespace, assembly name)");
+                }
+
+                namespacePrefix = assemblyFragments[0].Trim();
+                assemblyName = assemblyFragments[1].Trim();
+            }
+
+            if (usesEmbedded && usesFiles)
+            {
+                // Both path based and assembly based. File system path is checked first so the file system
+                // can override embedded templates in assemblies.
+                this.Engine = VelocityEngineFactory.Create(
+                    namespacePrefix,
+                    assemblyName,
+                    options.TemplatesPath);
+            }
+
+            else if (usesEmbedded)
+            {
+                // Just embedded templates in an assembly
+                this.Engine = VelocityEngineFactory.Create(namespacePrefix, assemblyName);
+            }
+
+            else
+            {
+                // File system.
+                this.Engine = VelocityEngineFactory.CreateUsingDirectory(options.TemplatesPath);
+            }
+
+            this.Options = options;
+            this.SmtpClientFactory = () => new SmtpClient();
+        }
 
         /// <summary>
         /// Creates a new <see cref="VelocityMailMessage"/> and installs some application-wide
@@ -102,9 +146,9 @@ namespace VelocityMail.Service
         {
             var msg = new VelocityMailMessage(templateName);
 
-            if (!string.IsNullOrWhiteSpace(this.Settings.DefaultFrom))
+            if (!string.IsNullOrWhiteSpace(this.Options.DefaultFrom))
             {
-                msg.From = new MailAddress(this.Settings.DefaultFrom);
+                msg.From = new MailAddress(this.Options.DefaultFrom);
             }
             
             this.InstallGlobalContextData(msg);
@@ -145,7 +189,7 @@ namespace VelocityMail.Service
         public virtual void Send(VelocityMailMessage msg)
         {
             // Don't actually send any mail if the service has been disabled
-            if (this.Settings.MailServiceMode == MailServiceMode.Disabled)
+            if (this.Options.MailServiceMode == MailServiceMode.Disabled)
             {
                 if (msg.To.Count > 0)
                 {
@@ -162,22 +206,22 @@ namespace VelocityMail.Service
                 {
                     // Re-write the destination addresses according to the rewrite
                     // rules, if enabled.
-                    if (this.Settings.RewriteAddresses)
+                    if (this.Options.RewriteAddresses)
                     {
                         ApplyRewriteRules(mmsg.To);
                         ApplyRewriteRules(mmsg.CC);
                         ApplyRewriteRules(mmsg.Bcc);
                     }
 
-                    if (this.Settings.MailServiceMode == MailServiceMode.Test)
+                    if (this.Options.MailServiceMode == MailServiceMode.Test)
                     {
                         mmsg.Subject = "[TEST]: " + mmsg.Subject;
                     }
 
                     // Add the global BCC list to the message.
-                    if (!String.IsNullOrWhiteSpace(this.Settings.GlobalBcc))
+                    if (!String.IsNullOrWhiteSpace(this.Options.GlobalBcc))
                     {
-                        mmsg.Bcc.Add(this.Settings.GlobalBcc);
+                        mmsg.Bcc.Add(this.Options.GlobalBcc);
                     }
 
                     using (var sender = this.SmtpClientFactory())
@@ -218,7 +262,7 @@ namespace VelocityMail.Service
         /// data.</remarks>
         protected virtual void InstallGlobalContextData(VelocityMailMessage msg)
         {
-            foreach (GlobalVarElement gvar in this.Settings.GlobalVariables)
+            foreach (var gvar in this.Options.GlobalVariables)
             {
                 msg.Put(gvar.Name, gvar.Value);
             }
@@ -234,7 +278,7 @@ namespace VelocityMail.Service
             {
                 var address = addresses[idx];
 
-                foreach (MailAddressRewriteRuleElement rule in this.Settings.MailAddressRewriteRules)
+                foreach (var rule in this.Options.MailAddressRewriteRules)
                 {
                     var match = Regex.IsMatch(address.Address, rule.Pattern, RegexOptions.IgnoreCase);
 
