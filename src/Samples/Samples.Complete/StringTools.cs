@@ -1,5 +1,4 @@
-﻿
-namespace Samples.Complete
+﻿namespace Samples.Complete
 {
     class StringTools
     {

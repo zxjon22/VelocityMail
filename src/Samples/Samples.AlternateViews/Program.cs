@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VelocityMail.Service;
 
 namespace Samples.AlternateViews
@@ -17,7 +13,10 @@ namespace Samples.AlternateViews
     {
         static void Main(string[] args)
         {
-            var mailService = new VelocityMailService();
+            var mailService = new VelocityMailService(new VelocityMailOptions
+            {
+                TemplatesAssembly = "Samples.AlternateViews.EmailTemplates, Samples.AlternateViews"
+            });
 
             using (var msg = mailService.CreateMailMessage("SimpleTemplate", "testfrom@test.com", "testto@test.com"))
             {

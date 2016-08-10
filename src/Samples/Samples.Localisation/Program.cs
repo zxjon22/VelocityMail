@@ -16,7 +16,10 @@ namespace Samples.Localisation
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            var mailService = new VelocityMailService();
+            var mailService = new VelocityMailService(new VelocityMailOptions
+            {
+                TemplatesAssembly = "Samples.Localisation.EmailTemplates, Samples.Localisation"
+            });
 
             // German should fallback to the default.
             RunAsUiCulture("de-DE", () =>
