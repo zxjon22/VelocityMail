@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace VelocityMail.Configuration
 {
     /// <summary>
-    /// Global variables that are made available to all contexts automatically
+    /// Global variables are made available to all templates automatically
     /// </summary>
     public class GlobalVarElement : ConfigurationElement
     {

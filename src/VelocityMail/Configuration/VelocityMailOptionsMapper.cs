@@ -2,6 +2,10 @@
 
 namespace VelocityMail.Configuration
 {
+    /// <summary>
+    /// Helper class for converting a <see cref="VelocityMailSection"/> instance to a
+    /// <see cref="VelocityMailOptions"/> instance
+    /// </summary>
     static class VelocityMailOptionsMapper
     {
         /// <summary>

@@ -1,5 +1,4 @@
-﻿
-namespace VelocityMail
+﻿namespace VelocityMail
 {
     /// <summary>
     /// Service operation

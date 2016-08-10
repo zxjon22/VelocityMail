@@ -1,5 +1,4 @@
-﻿
-namespace VelocityMail
+﻿namespace VelocityMail
 {
     /// <summary>
     /// Match mode for a rewrite rule.

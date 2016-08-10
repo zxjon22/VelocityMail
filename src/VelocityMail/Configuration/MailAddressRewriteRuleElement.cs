@@ -3,8 +3,9 @@
 namespace VelocityMail.Configuration
 {
     /// <summary>
-    /// Set of re-write rules when the mail service is running in test mode. Any addresses
-    /// that match the 'replace' element are replaced with the 'with' element.
+    /// Rule for re-writing e-mail address when |RewriteAddresses| is set to
+    /// true. Any addresses that match the 'replace' element are replaced with
+    /// the 'with' element.
     /// </summary>
     public class MailAddressRewriteRuleElement : ConfigurationElement
     {

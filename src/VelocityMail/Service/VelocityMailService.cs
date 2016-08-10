@@ -195,7 +195,7 @@ namespace VelocityMail.Service
             {
                 if (msg.To.Count > 0)
                 {
-                    log.InfoFormat("Message entitled '{0}' to '{1}' not sent as MailService is disabled.",
+                    log.InfoFormat("Message entitled '{0}' to '{1}' not sent as VelocityMail is disabled.",
                         msg.To[0], msg.Subject);
                 }
 
@@ -221,7 +221,7 @@ namespace VelocityMail.Service
                     }
 
                     // Add the global BCC list to the message.
-                    if (!String.IsNullOrWhiteSpace(this.Options.GlobalBcc))
+                    if (!string.IsNullOrWhiteSpace(this.Options.GlobalBcc))
                     {
                         mmsg.Bcc.Add(this.Options.GlobalBcc);
                     }
@@ -247,7 +247,6 @@ namespace VelocityMail.Service
                     // a big deal since it's unlikely to be sent twice.
                     msg.Attachments.Clear();
                 }
-
             }
         }
 

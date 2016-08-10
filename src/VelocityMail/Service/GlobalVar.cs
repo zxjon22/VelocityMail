@@ -1,5 +1,4 @@
-﻿
-namespace VelocityMail.Service
+﻿namespace VelocityMail.Service
 {
     /// <summary>
     /// Global variables that are made available to all templates automatically

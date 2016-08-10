@@ -5,7 +5,9 @@ using NVelocity.App;
 namespace VelocityMail
 {
     /// <summary>
-    /// Helper factory class to create a <see cref="VelocityEngine"/>
+    /// Helper factory class to create a <see cref="VelocityEngine"/>. We deliberately hide
+    /// NVelocity from the outside world in case we want to replace it with another
+    /// implementation later.
     /// </summary>
     static class VelocityEngineFactory
     {

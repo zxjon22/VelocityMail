@@ -1,6 +1,4 @@
-﻿using VelocityMail.Configuration;
-
-namespace VelocityMail.Service
+﻿namespace VelocityMail.Service
 {
     /// <summary>
     /// Rule for re-writing e-mail address when |RewriteAddresses| is set to

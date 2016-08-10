@@ -48,10 +48,9 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
-        /// Name of the assembly which holds the e-mail templates as
-        /// resources. If this field is missing, it is assumed |templatesPath|
-        /// is a file system path. This and/or |templatesPath| must be set unless you are
-        /// configuring the mail service manually via its constructor.
+        /// Name of the namespace in the corresponding assembly which holds the e-mail templates as
+        /// resources. If null, TemplatesPath must be set. If both are set, TemplatesPath is
+        /// searched for matching templates before TemplatesAssembly.
         /// </summary>
         [ConfigurationProperty("templatesAssembly", IsRequired = false)]
         public string TemplatesAssembly
@@ -61,10 +60,8 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
-        /// Path to the e-mail templates. This is either a file system path
-        /// if the templates are files on disk, or an assembly namespace, e.g.
-        /// MyAssembly.EmailTemplates. This and/or |templatesAssembly| must be set unless you are
-        /// configuring the mail service manually via its constructor.
+        /// Path to the e-mail templates on the file system. If null, TemplatesPath must be set.
+        /// If both are set, TemplatesPath is searched for matching templates before TemplatesAssembly.
         /// </summary>
         [ConfigurationProperty("templatesPath", IsRequired = false)]
         public string TemplatesPath
@@ -86,7 +83,7 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
-        /// Collection of global variables that are made available to all contexts automatically
+        /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         [ConfigurationProperty("globalVars", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(GlobalVarCollection), AddItemName = "add")]
@@ -96,8 +93,8 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
-        /// Set of rules for re-writing e-mail address when MailServiceMode is set to
-        /// EnabledWithAddressRewrite
+        /// Set of rules for re-writing e-mail addresses when |RewriteAddresses| is set to
+        /// true.
         /// </summary>
         [ConfigurationProperty("rewriteRules", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(MailAddressRewriteRuleCollection), AddItemName = "addrule")]

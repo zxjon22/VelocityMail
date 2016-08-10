@@ -120,6 +120,7 @@ namespace VelocityMail
         }
 
         /// <summary>
+        /// Parses the specified template using NVelocity.
         /// </summary>
         /// <param name="ctx">VelocityContext used to populate the template</param>
         /// <param name="templateName">Name of the velocity template to use</param>
@@ -186,7 +187,7 @@ namespace VelocityMail
                 if (!engine.Evaluate(ctx, writer, typeof(VelocityMailMessage).Name, template))
                 {
                     throw new MailPreparationException(
-                        "NVelocity failed to merge the TemplatedMailMessage template. " +
+                        "NVelocity failed to merge the VelocityMailMessage template. " +
                         "See log for details");
                 }
 

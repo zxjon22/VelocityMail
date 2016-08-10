@@ -3,8 +3,8 @@
 namespace VelocityMail.Configuration
 {
     /// <summary>
-    /// Collection of re-write address rules applied when running in test mode
-    /// (MailServiceMode is set to EnabledWithAddressRewrite).
+    /// Set of rules for re-writing e-mail addresses when |RewriteAddresses| in
+    /// <see cref="VelocityMailOptions"/> is set to true.
     /// </summary>
     public class MailAddressRewriteRuleCollection : ConfigurationElementCollection
     {

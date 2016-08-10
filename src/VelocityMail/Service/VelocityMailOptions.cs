@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-using VelocityMail.Configuration;
 
 namespace VelocityMail.Service
 {
