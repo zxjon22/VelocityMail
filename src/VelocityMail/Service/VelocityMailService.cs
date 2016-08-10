@@ -28,11 +28,11 @@ namespace VelocityMail.Service
         /// </summary>
         /// <param name="settings">Service settings. If null, the service attempts to retrieve them
         /// from (Web|App).Config</param>
-        public VelocityMailService(VelocityMailServiceConfigurationSection settings)
+        public VelocityMailService(VelocityMailSection settings)
         {
             if (settings == null)
             {
-                settings = VelocityMailServiceConfigurationSection.Settings;
+                settings = VelocityMailSection.Settings;
 
                 if (settings == null)
                 {
@@ -83,7 +83,7 @@ namespace VelocityMail.Service
         /// <summary>
         /// Service settings
         /// </summary>
-        public VelocityMailServiceConfigurationSection Settings { get; set; }
+        public VelocityMailSection Settings { get; set; }
 
         /// <summary>
         /// Factory method to create an SmtpClient when sending an e-mail. By default, simply

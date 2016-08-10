@@ -51,7 +51,7 @@
     <Compile Include="Configuration\MailAddressRewriteRuleElement.cs" />
     <Compile Include="Configuration\MailServiceMode.cs" />
     <Compile Include="Configuration\MatchMode.cs" />
-    <Compile Include="Configuration\VelocityMailServiceConfigurationSection.cs" />
+    <Compile Include="Configuration\VelocityMailSection.cs" />
     <Compile Include="GlobalAssemblyInfo.cs" />
     <Compile Include="MailPreparationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

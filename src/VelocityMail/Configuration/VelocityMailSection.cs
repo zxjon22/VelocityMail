@@ -5,14 +5,14 @@ namespace VelocityMail.Configuration
     /// <summary>
     /// Application-wide configuration of the mail service.
     /// </summary>
-    public class VelocityMailServiceConfigurationSection : ConfigurationSection
+    public class VelocityMailSection : ConfigurationSection
     {
         /// <summary>
         /// Static method to get the settings from App|Web.config. Will be null if not found.
         /// </summary>
-        public static VelocityMailServiceConfigurationSection Settings
+        public static VelocityMailSection Settings
         {
-            get { return ConfigurationManager.GetSection("velocityMail") as VelocityMailServiceConfigurationSection; }
+            get { return ConfigurationManager.GetSection("velocityMail") as VelocityMailSection; }
         }
 
         /// <summary>

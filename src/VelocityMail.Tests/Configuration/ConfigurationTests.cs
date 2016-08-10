@@ -89,7 +89,7 @@ namespace VelocityMail.Tests.Configuration
         /// </summary>
         /// <param name="fileName">Name of the configuration file to load</param>
         /// <returns>The VelocityMailServiceConfigurationSection in the config file.</returns>
-        private VelocityMailServiceConfigurationSection GetTestConfig(string fileName)
+        private VelocityMailSection GetTestConfig(string fileName)
         {
             var fileMap = new ExeConfigurationFileMap
             {
@@ -99,7 +99,7 @@ namespace VelocityMail.Tests.Configuration
             var config = ConfigurationManager
                 .OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
 
-            var settings = (VelocityMailServiceConfigurationSection)config.GetSection("velocityMail");
+            var settings = (VelocityMailSection)config.GetSection("velocityMail");
             return settings;
         }
     }
