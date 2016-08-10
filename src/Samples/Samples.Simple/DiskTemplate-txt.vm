@@ -1,3 +1,0 @@
-﻿Welcome $name. This is a simple example showing today's date: $today.ToShortDateString()
-
-(This template was loaded from disk).

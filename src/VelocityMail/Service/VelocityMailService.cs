@@ -37,7 +37,9 @@ namespace VelocityMail.Service
         /// </summary>
         /// <param name="settings">Service settings. If null, the service attempts to retrieve them
         /// from (Web|App).Config</param>
-        public VelocityMailService(VelocityMailSection settings)
+        /// <param name="smtpClientFactory">Factory method for create an SmtpClient used to send
+        /// e-mails. If null, uses the default.</param>
+        public VelocityMailService(VelocityMailSection settings, Func<SmtpClient>smtpClientFactory = null)
         {
             if (settings == null)
             {
@@ -49,30 +51,25 @@ namespace VelocityMail.Service
                 }
             }
 
-            var options = settings.ToMailOptions();
+            var options = settings.ToMailOptions();            
+            options.SmtpClientFactory = smtpClientFactory;
             this.Init(options);
         }
 
         /// <summary>
         /// Logging
         /// </summary>
-        private static readonly ILog log = LogProvider.GetCurrentClassLogger();
+        static readonly ILog log = LogProvider.GetCurrentClassLogger();
 
         /// <summary>
         /// VelocityEngine instance used by this service
         /// </summary>
-        public VelocityEngine Engine { get; set; }
+        VelocityEngine Engine { get; set; }
 
         /// <summary>
         /// Service options
         /// </summary>
-        public VelocityMailOptions Options { get; set; }
-
-        /// <summary>
-        /// Factory method to create an SmtpClient when sending an e-mail. By default, simply
-        /// news an SmtpClient with the configuration from (Web|App).config
-        /// </summary>
-        public Func<SmtpClient> SmtpClientFactory { get; set; }
+        VelocityMailOptions Options { get; set; }
 
         /// <summary>
         /// Initialises the service with the specified options.
@@ -131,8 +128,13 @@ namespace VelocityMail.Service
                 this.Engine = VelocityEngineFactory.CreateUsingDirectory(options.TemplatesPath);
             }
 
+            // Use the default SmtpClient if not specified by the user
+            if (options.SmtpClientFactory == null)
+            {
+                options.SmtpClientFactory = () => new SmtpClient();
+            }
+
             this.Options = options;
-            this.SmtpClientFactory = () => new SmtpClient();
         }
 
         /// <summary>
@@ -224,7 +226,7 @@ namespace VelocityMail.Service
                         mmsg.Bcc.Add(this.Options.GlobalBcc);
                     }
 
-                    using (var sender = this.SmtpClientFactory())
+                    using (var sender = this.Options.SmtpClientFactory())
                     {
                         sender.Send(mmsg);
                     }

@@ -2,6 +2,7 @@
 using System.IO;
 using FluentAssertions;
 using netDumbster.smtp;
+using VelocityMail.Service;
 using Xunit;
 
 namespace VelocityMail.Tests
@@ -34,15 +35,15 @@ namespace VelocityMail.Tests
         [Fact]
         public void TextTemplateEmbeddedInAssembly()
         {
-            var engine = VelocityEngineFactory
-                .Create("VelocityMail.Tests.Assets.Embedded", "VelocityMail.Tests");
-
-            using (var msg = new VelocityMailMessage("SimpleEmbedded", "testfrom@test.com", "testto@test.com"))
+            var service = new VelocityMailService(new VelocityMailOptions
             {
-                using (var smtpClient = this.CreateSmtpClient())
-                {
-                    smtpClient.Send(msg.GetMailMessage(engine));
-                }
+                TemplatesAssembly = "VelocityMail.Tests.Assets.Embedded, VelocityMail.Tests",
+                SmtpClientFactory = () => this.CreateSmtpClient()
+            });
+
+            using (var msg = service.CreateMailMessage("SimpleEmbedded", "testfrom@test.com", "testto@test.com"))
+            {
+                service.Send(msg);
             }
 
             this.smtpServer.ReceivedEmailCount.Should().Be(1);
@@ -58,15 +59,15 @@ namespace VelocityMail.Tests
         {
             var path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
 
-            var engine = VelocityEngineFactory
-                .CreateUsingDirectory(Path.Combine(path, @"Assets\OnDisk"));
-
-            using (var msg = new VelocityMailMessage("SimpleOnDisk", "testfrom@test.com", "testto@test.com"))
+            var service = new VelocityMailService(new VelocityMailOptions
             {
-                using (var smtpClient = this.CreateSmtpClient())
-                {
-                    smtpClient.Send(msg.GetMailMessage(engine));
-                }
+                TemplatesPath = Path.Combine(path, @"Assets\OnDisk"),
+                SmtpClientFactory = () => this.CreateSmtpClient()
+            });
+
+            using (var msg = service.CreateMailMessage("SimpleOnDisk", "testfrom@test.com", "testto@test.com"))
+            {
+                service.Send(msg);
             }
 
             this.smtpServer.ReceivedEmailCount.Should().Be(1);
@@ -82,16 +83,16 @@ namespace VelocityMail.Tests
         {
             var path = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
 
-            var engine = VelocityEngineFactory
-                .Create("VelocityMail.Tests.Assets.Embedded", "VelocityMail.Tests",
-                        Path.Combine(path, @"Assets\OnDisk"));
-
-            using (var msg = new VelocityMailMessage("SearchPriority", "testfrom@test.com", "testto@test.com"))
+            var service = new VelocityMailService(new VelocityMailOptions
             {
-                using (var smtpClient = this.CreateSmtpClient())
-                {
-                    smtpClient.Send(msg.GetMailMessage(engine));
-                }
+                TemplatesAssembly = "VelocityMail.Tests.Assets.Embedded, VelocityMail.Tests",
+                TemplatesPath = Path.Combine(path, @"Assets\OnDisk"),
+                SmtpClientFactory = () => this.CreateSmtpClient()
+            });
+
+            using (var msg = service.CreateMailMessage("SearchPriority", "testfrom@test.com", "testto@test.com"))
+            {
+                service.Send(msg);
             }
 
             this.smtpServer.ReceivedEmailCount.Should().Be(1);

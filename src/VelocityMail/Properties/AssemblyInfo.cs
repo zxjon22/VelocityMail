@@ -7,5 +7,5 @@ using System.Runtime.InteropServices;
 #if !PORTABLE && !PORTABLE40
 [assembly: ComVisible(false)]
 #endif
-//[assembly: CLSCompliant(true)] - NVelocity isn't unfortunately.
+[assembly: CLSCompliant(true)]
 [assembly: System.Resources.NeutralResourcesLanguage("en")]

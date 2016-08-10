@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Mail;
 using VelocityMail.Configuration;
 
 namespace VelocityMail.Service
@@ -60,5 +62,11 @@ namespace VelocityMail.Service
         /// true.
         /// </summary>
         public List<MailAddressRewriteRule> MailAddressRewriteRules { get; set; }
+
+        /// <summary>
+        /// Factory method to create an SmtpClient when sending an e-mail. By default, simply
+        /// creates a new SmtpClient with the configuration from (Web|App).config
+        /// </summary>
+        public Func<SmtpClient> SmtpClientFactory { get; set; }
     }
 }

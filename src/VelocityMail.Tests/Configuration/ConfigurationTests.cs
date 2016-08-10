@@ -32,8 +32,7 @@ namespace VelocityMail.Tests.Configuration
         public void GlobalVars()
         {
             var settings = this.GetTestConfig(@"Configuration\GlobalVars.config");
-            var svc = new VelocityMailService(settings);
-            svc.SmtpClientFactory = () => this.CreateSmtpClient();
+            var svc = new VelocityMailService(settings, () => this.CreateSmtpClient());
 
             using (var msg = svc.CreateMailMessage("GlobalVars", "testfrom@test.com", "testto@test.com"))
             {
@@ -51,9 +50,8 @@ namespace VelocityMail.Tests.Configuration
         public void TestMode()
         {
             var settings = this.GetTestConfig(@"Configuration\TestMode.config");
-            var svc = new VelocityMailService(settings);
+            var svc = new VelocityMailService(settings, () => this.CreateSmtpClient());
             var subject = "TestMode test";
-            svc.SmtpClientFactory = () => this.CreateSmtpClient();
 
             using (var msg = svc.CreateMailMessage("SimpleEmbedded", "testfrom@test.com", "testto@test.com"))
             {
@@ -73,8 +71,7 @@ namespace VelocityMail.Tests.Configuration
         public void DisabledMode()
         {
             var settings = this.GetTestConfig(@"Configuration\DisabledMode.config");
-            var svc = new VelocityMailService(settings);
-            svc.SmtpClientFactory = () => this.CreateSmtpClient();
+            var svc = new VelocityMailService(settings, () => this.CreateSmtpClient());
 
             using (var msg = svc.CreateMailMessage("SimpleEmbedded", "testfrom@test.com", "testto@test.com"))
             {

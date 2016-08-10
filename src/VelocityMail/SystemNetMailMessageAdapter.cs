@@ -13,12 +13,12 @@ namespace VelocityMail
     /// Creates a System.Net.Mail.MailMessage which can be sent from the SmtpClient from
     /// a VelocityMailMessage.
     /// </summary>
-    public static class SystemNetMailMessageAdapter
+    static class SystemNetMailMessageAdapter
     {
         /// <summary>
         /// Logging
         /// </summary>
-        private static readonly ILog log = LogProvider.GetCurrentClassLogger();
+        static readonly ILog log = LogProvider.GetCurrentClassLogger();
 
         /// <summary>
         /// Parses the <see cref="VelocityMailMessage"/> and returns a <see cref="MailMessage"/>
@@ -27,7 +27,7 @@ namespace VelocityMail
         /// <param name="msg">Extension point</param>
         /// <param name="engine">Velocity instance used to parse the template</param>
         /// <returns>Final MailMessage for sending</returns>
-        public static MailMessage GetMailMessage(this VelocityMailMessage msg, VelocityEngine engine)
+        internal static MailMessage GetMailMessage(this VelocityMailMessage msg, VelocityEngine engine)
         {
             var ctx = new VelocityContext();
 
@@ -124,7 +124,7 @@ namespace VelocityMail
         /// <param name="ctx">VelocityContext used to populate the template</param>
         /// <param name="templateName">Name of the velocity template to use</param>
         /// <returns>The parsed template or null if no suitable template could be found</returns>
-        private static string ParseLocalisedTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
+        static string ParseLocalisedTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {
             var ci = CultureInfo.CurrentUICulture;
             var langCode = ci.TwoLetterISOLanguageName;
@@ -141,7 +141,7 @@ namespace VelocityMail
             return output;
         }
 
-        private static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
+        static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace VelocityMail
             return null;
         }
 
-        private static string ParseString(VelocityEngine engine, VelocityContext ctx, string template)
+        static string ParseString(VelocityEngine engine, VelocityContext ctx, string template)
         {
             if (string.IsNullOrWhiteSpace(template))
             {
