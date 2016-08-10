@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.Complete", "Samples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VelocityMail.Tests", "VelocityMail.Tests\VelocityMail.Tests.csproj", "{7D6372BB-D259-4B99-8DCA-E2CC6D1B1FCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samples.ConfigurationSection", "Samples\Samples.ConfigurationSection\Samples.ConfigurationSection.csproj", "{C1FDA44A-D345-410D-BCAF-1439A94E59F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{7D6372BB-D259-4B99-8DCA-E2CC6D1B1FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D6372BB-D259-4B99-8DCA-E2CC6D1B1FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D6372BB-D259-4B99-8DCA-E2CC6D1B1FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1FDA44A-D345-410D-BCAF-1439A94E59F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1FDA44A-D345-410D-BCAF-1439A94E59F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1FDA44A-D345-410D-BCAF-1439A94E59F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1FDA44A-D345-410D-BCAF-1439A94E59F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,5 +69,6 @@ Global
 		{5387F7E1-D0CF-4244-81F0-19B7F5469B26} = {86970C9C-E0D9-4CF0-B238-6B71F8C198E7}
 		{23E1A9AA-2EA1-443A-87CA-39FC9B9B2ECF} = {86970C9C-E0D9-4CF0-B238-6B71F8C198E7}
 		{C55BF48F-65EB-41FE-8653-7EF3810FEFE2} = {86970C9C-E0D9-4CF0-B238-6B71F8C198E7}
+		{C1FDA44A-D345-410D-BCAF-1439A94E59F9} = {86970C9C-E0D9-4CF0-B238-6B71F8C198E7}
 	EndGlobalSection
 EndGlobal

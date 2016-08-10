@@ -1,0 +1,11 @@
+﻿Welcome $name. This is a simple example showing today's date: $today.ToShortDateString()
+
+\$siteUrl is automatically set to the value of siteUrl in the globalVars collection in
+configuration section (since we added it for this sample).
+
+Because of this you can click here: ${siteUrl}/VelocityMail to reach the project site.
+
+Address re-writing is enabled so although this message was originally to be sent to
+jon@bar.com and max@foo.com, Max's e-mail was re-written to  rewritten@bar.com.
+
+Re-writing applies to To, Cc, and Bcc. The 'From' address is not touched.

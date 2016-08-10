@@ -206,6 +206,12 @@ namespace VelocityMail.Service
             {
                 try
                 {
+                    // Add the global BCC list to the message.
+                    if (!string.IsNullOrWhiteSpace(this.Options.GlobalBcc))
+                    {
+                        mmsg.Bcc.Add(this.Options.GlobalBcc);
+                    }
+
                     // Re-write the destination addresses according to the rewrite
                     // rules, if enabled.
                     if (this.Options.RewriteAddresses)
@@ -218,12 +224,6 @@ namespace VelocityMail.Service
                     if (this.Options.MailServiceMode == MailServiceMode.Test)
                     {
                         mmsg.Subject = "[TEST]: " + mmsg.Subject;
-                    }
-
-                    // Add the global BCC list to the message.
-                    if (!string.IsNullOrWhiteSpace(this.Options.GlobalBcc))
-                    {
-                        mmsg.Bcc.Add(this.Options.GlobalBcc);
                     }
 
                     using (var sender = this.Options.SmtpClientFactory())
