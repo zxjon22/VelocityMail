@@ -52,6 +52,12 @@ namespace VelocityMail.Service
         public string DefaultFrom { get; set; }
 
         /// <summary>
+        /// If set, a copy of the e-mail will be saved to this file system path in
+        /// .eml format.
+        /// </summary>
+        public string SaveTo { get; set; }
+
+        /// <summary>
         /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         public List<GlobalVar> GlobalVariables { get; set; }

@@ -230,6 +230,16 @@ namespace VelocityMail.Service
                     {
                         sender.Send(mmsg);
                     }
+
+                    if (!string.IsNullOrWhiteSpace(this.Options.SaveTo))
+                    {
+                        using(var sender = new SmtpClient())
+                        {
+                            sender.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
+                            sender.PickupDirectoryLocation = this.Options.SaveTo;
+                            sender.Send(mmsg);
+                        }
+                    }
                 }
 
                 catch (Exception ex)

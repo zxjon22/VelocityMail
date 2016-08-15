@@ -23,7 +23,8 @@ namespace VelocityMail.Configuration
                 GlobalBcc = section.GlobalBcc,
                 TemplatesAssembly = section.TemplatesAssembly,
                 TemplatesPath = section.TemplatesPath,
-                DefaultFrom = section.DefaultFrom
+                DefaultFrom = section.DefaultFrom,
+                SaveTo = section.SaveTo
             };
 
             foreach(MailAddressRewriteRuleElement rule in section.MailAddressRewriteRules)

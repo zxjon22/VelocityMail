@@ -83,6 +83,17 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
+        /// If set, a copy of the e-mail will be saved to this file system path in
+        /// .eml format.
+        /// </summary>
+        [ConfigurationProperty("saveTo", IsRequired = false)]
+        public string SaveTo
+        {
+            get { return (string)base["saveTo"]; }
+            set { base["saveTo"] = value; }
+        }
+
+        /// <summary>
         /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         [ConfigurationProperty("globalVars", IsDefaultCollection = false)]
