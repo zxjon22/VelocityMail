@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
@@ -37,9 +38,7 @@ namespace VelocityMail.Service
         /// </summary>
         /// <param name="settings">Service settings. If null, the service attempts to retrieve them
         /// from (Web|App).Config</param>
-        /// <param name="smtpClientFactory">Factory method for create an SmtpClient used to send
-        /// e-mails. If null, uses the default.</param>
-        public VelocityMailService(VelocityMailSection settings, Func<SmtpClient>smtpClientFactory = null)
+        public VelocityMailService(VelocityMailSection settings)
         {
             if (settings == null)
             {
@@ -52,7 +51,6 @@ namespace VelocityMail.Service
             }
 
             var options = settings.ToMailOptions();            
-            options.SmtpClientFactory = smtpClientFactory;
             this.Init(options);
         }
 
@@ -67,9 +65,50 @@ namespace VelocityMail.Service
         VelocityEngine Engine { get; set; }
 
         /// <summary>
-        /// Service options
+        /// Service operation mode. <see cref="MailServiceMode"/> for details.
         /// </summary>
-        VelocityMailOptions Options { get; set; }
+        public MailServiceMode MailServiceMode { get; set; }
+
+        /// <summary>
+        /// Whether or not to re-write e-mail addresses according to the
+        /// rules in <see cref="MailAddressRewriteRules"/>.
+        /// </summary>
+        public bool RewriteAddresses { get; set; }
+
+        /// <summary>
+        /// List of comma-separated e-mail addresses which will be Bcc'd on all e-mails sent
+        /// from the service.
+        /// </summary>
+        public string GlobalBcc { get; set; }
+
+        /// <summary>
+        /// Default From address. If a From address is not specified in the <see cref="VelocityMailMessage"/>
+        /// itself, this is used instead.
+        /// </summary>
+        public string DefaultFrom { get; set; }
+
+        /// <summary>
+        /// If set, a copy of the e-mail will be saved to this file system path in
+        /// .eml format.
+        /// </summary>
+        public string SaveTo { get; set; }
+
+        /// <summary>
+        /// Collection of global variables that are made available to all templates automatically
+        /// </summary>
+        public List<GlobalVar> GlobalVariables { get; private set; }
+
+        /// <summary>
+        /// Set of rules for re-writing e-mail addresses when |RewriteAddresses| is set to
+        /// true.
+        /// </summary>
+        public List<MailAddressRewriteRule> MailAddressRewriteRules { get; private set; }
+
+        /// <summary>
+        /// Factory method to create an SmtpClient when sending an e-mail. By default, simply
+        /// creates a new SmtpClient with the configuration from (Web|App).config
+        /// </summary>
+        public Func<SmtpClient> SmtpClientFactory { get; set; }
 
         /// <summary>
         /// Initialises the service with the specified options.
@@ -77,6 +116,9 @@ namespace VelocityMail.Service
         /// <param name="options">Configuration options</param>
         void Init(VelocityMailOptions options)
         {
+            this.GlobalVariables = new List<GlobalVar>();
+            this.MailAddressRewriteRules = new List<MailAddressRewriteRule>();
+
             if (options == null)
             {
                 throw new ArgumentNullException("options");
@@ -128,13 +170,17 @@ namespace VelocityMail.Service
                 this.Engine = VelocityEngineFactory.CreateUsingDirectory(options.TemplatesPath);
             }
 
-            // Use the default SmtpClient if not specified by the user
-            if (options.SmtpClientFactory == null)
-            {
-                options.SmtpClientFactory = () => new SmtpClient();
-            }
+            this.MailServiceMode = options.MailServiceMode;
+            this.RewriteAddresses = options.RewriteAddresses;
+            this.GlobalBcc = options.GlobalBcc;
+            this.DefaultFrom = options.DefaultFrom;
+            this.SaveTo = options.SaveTo;
+            this.GlobalVariables.AddRange(options.GlobalVariables);
+            this.MailAddressRewriteRules.AddRange(options.MailAddressRewriteRules);
 
-            this.Options = options;
+            // If user doesn't supply a factory function for the SmtpClient,
+            // we just new() one.
+            this.SmtpClientFactory = options.SmtpClientFactory ?? (() => new SmtpClient());
         }
 
         /// <summary>
@@ -148,9 +194,9 @@ namespace VelocityMail.Service
         {
             var msg = new VelocityMailMessage(templateName);
 
-            if (!string.IsNullOrWhiteSpace(this.Options.DefaultFrom))
+            if (!string.IsNullOrWhiteSpace(this.DefaultFrom))
             {
-                msg.From = new MailAddress(this.Options.DefaultFrom);
+                msg.From = new MailAddress(this.DefaultFrom);
             }
             
             this.InstallGlobalContextData(msg);
@@ -191,7 +237,7 @@ namespace VelocityMail.Service
         public virtual void Send(VelocityMailMessage msg)
         {
             // Don't actually send any mail if the service has been disabled
-            if (this.Options.MailServiceMode == MailServiceMode.Disabled)
+            if (this.MailServiceMode == MailServiceMode.Disabled)
             {
                 if (msg.To.Count > 0)
                 {
@@ -207,36 +253,36 @@ namespace VelocityMail.Service
                 try
                 {
                     // Add the global BCC list to the message.
-                    if (!string.IsNullOrWhiteSpace(this.Options.GlobalBcc))
+                    if (!string.IsNullOrWhiteSpace(this.GlobalBcc))
                     {
-                        mmsg.Bcc.Add(this.Options.GlobalBcc);
+                        mmsg.Bcc.Add(this.GlobalBcc);
                     }
 
                     // Re-write the destination addresses according to the rewrite
                     // rules, if enabled.
-                    if (this.Options.RewriteAddresses)
+                    if (this.RewriteAddresses)
                     {
                         ApplyRewriteRules(mmsg.To);
                         ApplyRewriteRules(mmsg.CC);
                         ApplyRewriteRules(mmsg.Bcc);
                     }
 
-                    if (this.Options.MailServiceMode == MailServiceMode.Test)
+                    if (this.MailServiceMode == MailServiceMode.Test)
                     {
                         mmsg.Subject = "[TEST]: " + mmsg.Subject;
                     }
 
-                    using (var sender = this.Options.SmtpClientFactory())
+                    using (var sender = this.SmtpClientFactory())
                     {
                         sender.Send(mmsg);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(this.Options.SaveTo))
+                    if (!string.IsNullOrWhiteSpace(this.SaveTo))
                     {
                         using(var sender = new SmtpClient())
                         {
                             sender.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                            sender.PickupDirectoryLocation = this.Options.SaveTo;
+                            sender.PickupDirectoryLocation = this.SaveTo;
                             sender.Send(mmsg);
                         }
                     }
@@ -273,7 +319,7 @@ namespace VelocityMail.Service
         /// data.</remarks>
         protected virtual void InstallGlobalContextData(VelocityMailMessage msg)
         {
-            foreach (var gvar in this.Options.GlobalVariables)
+            foreach (var gvar in this.GlobalVariables)
             {
                 msg.Put(gvar.Name, gvar.Value);
             }
@@ -289,7 +335,7 @@ namespace VelocityMail.Service
             {
                 var address = addresses[idx];
 
-                foreach (var rule in this.Options.MailAddressRewriteRules)
+                foreach (var rule in this.MailAddressRewriteRules)
                 {
                     var match = Regex.IsMatch(address.Address, rule.Pattern, RegexOptions.IgnoreCase);
 
