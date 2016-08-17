@@ -74,8 +74,7 @@ namespace VelocityMail.Configuration
         /// Default From address. If a From address is not specified in the <see cref="VelocityMailMessage"/>
         /// itself, this is used instead.
         /// </summary>
-        [ConfigurationProperty("defaultFrom", DefaultValue = "test@test.com", IsRequired = false)]
-        [RegexStringValidator(@"^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$")]
+        [ConfigurationProperty("defaultFrom", IsRequired = false)]
         public string DefaultFrom
         {
             get { return (string)base["defaultFrom"]; }
