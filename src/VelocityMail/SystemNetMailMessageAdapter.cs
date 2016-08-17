@@ -6,6 +6,8 @@ using NVelocity;
 using NVelocity.App;
 using NVelocity.Exception;
 using VelocityMail.Logging;
+using NVelocity.App.Events;
+using System.Net;
 
 namespace VelocityMail
 {
@@ -30,6 +32,7 @@ namespace VelocityMail
         internal static MailMessage GetMailMessage(this VelocityMailMessage msg, VelocityEngine engine)
         {
             var ctx = new VelocityContext();
+            ctx.AttachEventCartridge(new EventCartridge());
 
             foreach(var entry in msg.ContextData)
             {
@@ -37,7 +40,12 @@ namespace VelocityMail
             }
 
             var txtBody = ParseLocalisedTemplate(engine, ctx, msg.TemplateName + "-txt");
+
+            // Enable HTML-encoding for the HTML body.
+            ctx.EventCartridge.ReferenceInsertion += HtmlEncodeReferenceInsertion;
             var htmlBody = ParseLocalisedTemplate(engine, ctx, msg.TemplateName + "-html");
+            ctx.EventCartridge.ReferenceInsertion -= HtmlEncodeReferenceInsertion;
+
             var subject = ParseString(engine, ctx, msg.Subject);
 
             if (string.IsNullOrWhiteSpace(txtBody) && string.IsNullOrWhiteSpace(htmlBody))
@@ -142,6 +150,13 @@ namespace VelocityMail
             return output;
         }
 
+        /// <summary>
+        /// Parses the given template with the supplied VelocityEngine and VelocityContext.
+        /// </summary>
+        /// <param name="engine">The VelocityEngine instance to parse with</param>
+        /// <param name="ctx">The VelocityContext to use</param>
+        /// <param name="template">The template name</param>
+        /// <returns>Merged template text</returns>
         static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {
             try
@@ -175,6 +190,14 @@ namespace VelocityMail
             return null;
         }
 
+        /// <summary>
+        /// Parses the supplied string template with the given VelocityEngine
+        /// and VelocityContext.
+        /// </summary>
+        /// <param name="engine">The VelocityEngine instance to parse with</param>
+        /// <param name="ctx">The VelocityContext to use</param>
+        /// <param name="template">The string template</param>
+        /// <returns>Merged template text</returns>
         static string ParseString(VelocityEngine engine, VelocityContext ctx, string template)
         {
             if (string.IsNullOrWhiteSpace(template))
@@ -192,6 +215,23 @@ namespace VelocityMail
                 }
 
                 return writer.ToString();
+            }
+        }
+
+        /// <summary>
+        /// NVelocity EventCartridge ReferenceInsertion event handler. Enabled when parsing
+        /// HTML templates so correct HTML-encoding can be performed in the message body.
+        /// </summary>
+        /// <param name="sender">The EventCartridge</param>
+        /// <param name="e">Event details</param>
+        static void HtmlEncodeReferenceInsertion(object sender, ReferenceInsertionEventArgs e)
+        {
+            // NOTE: Only HTML-encode strings. Let all other objects pass through.
+            var originalValue = e.OriginalValue as string;
+
+            if (originalValue != null)
+            {
+                e.NewValue = WebUtility.HtmlEncode(originalValue);
             }
         }
     }

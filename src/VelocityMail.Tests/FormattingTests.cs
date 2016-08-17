@@ -13,7 +13,7 @@ namespace VelocityMail.Tests
         /// Body of the HtmlEncoding-html.vm template
         /// </summary>
         private const string HTML_ENCODING_BODY_CONTENT =
-            "<html><head></head><body>The names, $names, which contain an '&amp;' should " +
+            "<html><head></head><body>The names, Bill &amp; Ben, which contain an '&amp;' should " +
             "be HTML-encoded.</body></html>";
 
         /// <summary>
