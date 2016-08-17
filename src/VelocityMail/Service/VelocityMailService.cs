@@ -94,6 +94,12 @@ namespace VelocityMail.Service
         public string SaveTo { get; set; }
 
         /// <summary>
+        /// Whether or not text inserted into the HTML body of a generated e-mail
+        /// should be HTML-encoded. Text bodies are unaffected.
+        /// </summary>
+        public bool HtmlEncodeBody { get; set; }
+
+        /// <summary>
         /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         public List<GlobalVar> GlobalVariables { get; private set; }
@@ -175,6 +181,7 @@ namespace VelocityMail.Service
             this.GlobalBcc = options.GlobalBcc;
             this.DefaultFrom = options.DefaultFrom;
             this.SaveTo = options.SaveTo;
+            this.HtmlEncodeBody = options.HtmlEncodeBody ?? true;
             this.GlobalVariables.AddRange(options.GlobalVariables);
             this.MailAddressRewriteRules.AddRange(options.MailAddressRewriteRules);
 
@@ -248,7 +255,7 @@ namespace VelocityMail.Service
                 return;
             }
 
-            using (MailMessage mmsg = msg.GetMailMessage(this.Engine))
+            using (MailMessage mmsg = msg.GetMailMessage(this.Engine, this.HtmlEncodeBody))
             {
                 try
                 {

@@ -119,6 +119,16 @@ namespace Samples.Complete
                 PaymentType = PaymentType.PersonalCard
             });
 
+            order.OrderItems.Add(new OrderItem
+            {
+                ProductCode = "YZW992375",
+                Description = "Screem cleaner & cloth",
+                Quantity = 5,
+                Price = 2.95m,
+                Delivery = "3 Days",
+                PaymentType = PaymentType.PersonalCard
+            });
+
             return order;
         }
     }

@@ -28,8 +28,13 @@ namespace VelocityMail
         /// </summary>
         /// <param name="msg">Extension point</param>
         /// <param name="engine">Velocity instance used to parse the template</param>
+        /// <param name="htmlEncodeBody">If true, text inserted into the HTML body should be
+        /// HTML-encoded. Plain text bodies are unaffected.</param>
         /// <returns>Final MailMessage for sending</returns>
-        internal static MailMessage GetMailMessage(this VelocityMailMessage msg, VelocityEngine engine)
+        internal static MailMessage GetMailMessage(
+            this VelocityMailMessage msg,
+            VelocityEngine engine,
+            bool htmlEncodeBody)
         {
             var ctx = new VelocityContext();
             ctx.AttachEventCartridge(new EventCartridge());
@@ -42,9 +47,17 @@ namespace VelocityMail
             var txtBody = ParseLocalisedTemplate(engine, ctx, msg.TemplateName + "-txt");
 
             // Enable HTML-encoding for the HTML body.
-            ctx.EventCartridge.ReferenceInsertion += HtmlEncodeReferenceInsertion;
+            if (htmlEncodeBody)
+            {
+                ctx.EventCartridge.ReferenceInsertion += HtmlEncodeReferenceInsertion;
+            }
+
             var htmlBody = ParseLocalisedTemplate(engine, ctx, msg.TemplateName + "-html");
-            ctx.EventCartridge.ReferenceInsertion -= HtmlEncodeReferenceInsertion;
+
+            if (htmlEncodeBody)
+            {
+                ctx.EventCartridge.ReferenceInsertion -= HtmlEncodeReferenceInsertion;
+            }
 
             var subject = ParseString(engine, ctx, msg.Subject);
 

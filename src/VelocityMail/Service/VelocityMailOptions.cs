@@ -58,6 +58,12 @@ namespace VelocityMail.Service
         public string SaveTo { get; set; }
 
         /// <summary>
+        /// Whether or not text inserted into the HTML body of a generated e-mail
+        /// should be HTML-encoded. Text bodies are unaffected. Defaults to true.
+        /// </summary>
+        public bool? HtmlEncodeBody { get; set; }
+
+        /// <summary>
         /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         public List<GlobalVar> GlobalVariables { get; set; }

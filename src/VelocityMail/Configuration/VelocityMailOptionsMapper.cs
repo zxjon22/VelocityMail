@@ -24,7 +24,8 @@ namespace VelocityMail.Configuration
                 TemplatesAssembly = section.TemplatesAssembly,
                 TemplatesPath = section.TemplatesPath,
                 DefaultFrom = section.DefaultFrom,
-                SaveTo = section.SaveTo
+                SaveTo = section.SaveTo,
+                HtmlEncodeBody = section.HtmlEncodeBody
             };
 
             foreach(MailAddressRewriteRuleElement rule in section.MailAddressRewriteRules)

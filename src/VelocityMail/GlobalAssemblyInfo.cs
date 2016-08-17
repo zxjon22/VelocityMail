@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyDescription("Apache Velocity-formatted e-mail templating service")]
+[assembly: AssemblyDescription("Rich e-mail templating engine via Castle NVelocity")]
 [assembly: AssemblyProduct("VelocityMail")]
 [assembly: AssemblyCopyright("Copyright ©  2016 Jonathan Needle")]
 

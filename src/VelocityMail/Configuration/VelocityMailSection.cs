@@ -94,6 +94,17 @@ namespace VelocityMail.Configuration
         }
 
         /// <summary>
+        /// Whether or not text inserted into the HTML body of a generated e-mail
+        /// should be HTML-encoded. Text bodies are unaffected. Defaults to true.
+        /// </summary>
+        [ConfigurationProperty("htmlEncodeBody", IsRequired = false, DefaultValue = true)]
+        public bool HtmlEncodeBody
+        {
+            get { return (bool)base["htmlEncodeBody"]; }
+            set { base["htmlEncodeBody"] = value; }
+        }
+
+        /// <summary>
         /// Collection of global variables that are made available to all templates automatically
         /// </summary>
         [ConfigurationProperty("globalVars", IsDefaultCollection = false)]
