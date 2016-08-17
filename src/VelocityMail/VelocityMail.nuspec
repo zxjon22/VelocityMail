@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/zxjon22/VelocityMail</projectUrl>
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Rich E-mail templating engine via Castle NVelocity.</description>
+    <description>Rich E-mail templating library using Castle NVelocity.</description>
     <releaseNotes>https://github.com/zxjon22/VelocityMail/blob/master/Changelog.txt</releaseNotes>
     <language>en-US</language>
     <copyright>Copyright 2016 Jonathan Needle</copyright>
