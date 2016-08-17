@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="AbstractMailTest.cs" />
     <Compile Include="Configuration\ConfigurationTests.cs" />
+    <Compile Include="FormattingTests.cs" />
     <Compile Include="Helpers\netDumbsterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveToTests.cs" />
@@ -99,6 +100,8 @@
     <None Include="Assets\Configuration\TestMode.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="Assets\Embedded\HtmlEncoding-html.vm" />
+    <EmbeddedResource Include="Assets\Embedded\NoHtmlEncoding-txt.vm" />
     <None Include="Assets\OnDisk\SearchPriority-txt.vm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
