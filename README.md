@@ -83,7 +83,6 @@ From: me@foo.com
 To: you@bar.com
 Date: 17 Aug 2016 23:48:58 +0100
 Subject: VelocityMail sent this on 17/08/2016.
-Content-Type: text/plain; charset=utf-8
 
 Hello Jonathan,
 
