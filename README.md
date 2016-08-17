@@ -14,7 +14,7 @@ A simple, rich e-mail templating library for all .NET languages:
 Open Visual Studio and create a new C# Console Application and then install the NuGet package.
 
 ```
-Install-Package VelocityMail -Pre
+Install-Package VelocityMail
 ```
 
 ### Creating an E-mail Template
