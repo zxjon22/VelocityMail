@@ -95,6 +95,11 @@ namespace VelocityMail
                     mailMessage.Bcc.Add(addr);
                 }
 
+                foreach (MailAddress addr in msg.ReplyTo)
+                {
+                    mailMessage.ReplyToList.Add(addr);
+                }
+
                 mailMessage.Subject = subject;
                 mailMessage.SubjectEncoding = msg.Encoding;
 
