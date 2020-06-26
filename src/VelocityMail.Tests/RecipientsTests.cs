@@ -21,17 +21,15 @@ namespace VelocityMail.Tests
 
             using (var msg = service.CreateMailMessage("SimpleEmbedded", "testfrom@test.com", "testto@test.com"))
             {
-                msg.Bcc.Add("testcc@test.com");
-                msg.Bcc.Add("testbcc@test.com");
+                msg.Cc.Add("testcc@test.com");
                 msg.ReplyTo.Add("reply@test.com");
                 service.Send(msg);
             }
 
             this.smtpServer.ReceivedEmailCount.Should().Be(1);
-            this.smtpServer.ReceivedEmail[0].FromAddress.Address.Should().Be("testto@test.com");
-            this.smtpServer.ReceivedEmail[0].ToAddresses.Should().OnlyContain(x => x.Address == "reply@test.com");
-            this.smtpServer.ReceivedEmail[0].Headers["Ccc"].Should().Be("testcc@test.com");
-            this.smtpServer.ReceivedEmail[0].Headers["Bcc"].Should().Be("testbcc@test.com");
+            this.smtpServer.ReceivedEmail[0].FromAddress.Address.Should().Be("testfrom@test.com");
+            this.smtpServer.ReceivedEmail[0].Headers["To"].Should().Be("testto@test.com");
+            this.smtpServer.ReceivedEmail[0].Headers["Cc"].Should().Be("testcc@test.com");
             this.smtpServer.ReceivedEmail[0].Headers["Reply-To"].Should().Be("reply@test.com");
         }
     }
