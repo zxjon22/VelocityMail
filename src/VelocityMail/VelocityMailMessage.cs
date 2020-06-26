@@ -62,6 +62,7 @@ namespace VelocityMail
             this.To = new MailAddressCollection();
             this.Cc = new MailAddressCollection();
             this.Bcc = new MailAddressCollection();
+            this.ReplyTo = new MailAddressCollection();
             this.ContextData = new Dictionary<string, object>();
             this.Attachments = new List<Attachment>();
             this.Encoding = System.Text.Encoding.GetEncoding("utf-8");
@@ -91,6 +92,11 @@ namespace VelocityMail
         /// 'Bcc' Recipients
         /// </summary>
         public MailAddressCollection Bcc { get; private set; }
+
+        /// <summary>
+        /// Reply-to Recipients
+        /// </summary>
+        public MailAddressCollection ReplyTo { get; private set; }
 
         /// <summary>
         /// Subject of the e-mail. This text is processed in the same
