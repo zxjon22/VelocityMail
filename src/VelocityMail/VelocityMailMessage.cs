@@ -141,6 +141,7 @@ namespace VelocityMail
         /// <param name="fileName">Path to the file to attach</param>
         /// <param name="mediaType">Mime type of the file. If null, application/octet-stream is
         /// used.</param>
+        /// <param name="attachmentName">MIME content-type name for the attachment.</param>
         /// <exception cref="FileNotFoundException">If the file was not found</exception>
         public void AttachFile(string fileName, string mediaType, string attachmentName)
         {

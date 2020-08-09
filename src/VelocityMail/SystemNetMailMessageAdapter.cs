@@ -148,6 +148,7 @@ namespace VelocityMail
         /// <summary>
         /// Parses the specified template using NVelocity.
         /// </summary>
+        /// <param name="engine">Velocity template engine.</param>
         /// <param name="ctx">VelocityContext used to populate the template</param>
         /// <param name="templateName">Name of the velocity template to use</param>
         /// <returns>The parsed template or null if no suitable template could be found</returns>
@@ -173,7 +174,7 @@ namespace VelocityMail
         /// </summary>
         /// <param name="engine">The VelocityEngine instance to parse with</param>
         /// <param name="ctx">The VelocityContext to use</param>
-        /// <param name="template">The template name</param>
+        /// <param name="templateName">The template name</param>
         /// <returns>Merged template text</returns>
         static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {

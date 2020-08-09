@@ -9,6 +9,9 @@ namespace VelocityMail.Service
     /// </summary>
     public class VelocityMailOptions
     {
+        /// <summary>
+        /// Creates a new <see cref="VelocityMailOptions"/> with default values.
+        /// </summary>
         public VelocityMailOptions()
         {
             this.GlobalVariables = new List<GlobalVar>();
