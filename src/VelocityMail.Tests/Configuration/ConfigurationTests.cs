@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET452
+using System;
 using System.Configuration;
 using System.IO;
 using FluentAssertions;
@@ -104,3 +105,4 @@ namespace VelocityMail.Tests.Configuration
         }
     }
 }
+#endif

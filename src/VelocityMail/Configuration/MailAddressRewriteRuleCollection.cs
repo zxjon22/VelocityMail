@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿#if NET452
+using System.Configuration;
 
 namespace VelocityMail.Configuration
 {
@@ -19,3 +20,4 @@ namespace VelocityMail.Configuration
         }
     }
 }
+#endif // NET452
