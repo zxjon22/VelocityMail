@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 using NVelocity.App;
-using VelocityMail.Configuration;
 using VelocityMail.Logging;
+
+#if NET452
+using System.Configuration;
+using VelocityMail.Configuration;
+#endif
 
 namespace VelocityMail.Service
 {
@@ -14,6 +17,7 @@ namespace VelocityMail.Service
     /// </summary>
     public class VelocityMailService
     {
+#if NET452
         /// <summary>
         /// Creates a new <see cref="VelocityMailService"/> using the configuration section in
         /// (Web|App).config
@@ -22,7 +26,7 @@ namespace VelocityMail.Service
             : this((VelocityMailSection)null)
         {
         }
-
+#endif
         /// <summary>
         /// Creates a new <see cref="VelocityMailService"/> with the specified options.
         /// </summary>
@@ -32,6 +36,7 @@ namespace VelocityMail.Service
             this.Init(options);
         }
 
+#if NET452
         /// <summary>
         /// Creates a new instance of a <see cref="VelocityMailService"/> using the settings
         /// in the given <see cref="VelocityMailSection"/>
@@ -53,6 +58,7 @@ namespace VelocityMail.Service
             var options = settings.ToMailOptions();            
             this.Init(options);
         }
+#endif
 
         /// <summary>
         /// Logging
@@ -313,7 +319,7 @@ namespace VelocityMail.Service
             }
         }
 
-        #region Implementation
+#region Implementation
         
         /// <summary>
         /// Installs some application-wide context data into the <see cref="VelocityMailMessage"/>
@@ -363,6 +369,6 @@ namespace VelocityMail.Service
             }
         }
 
-        #endregion
+#endregion
     }
 }

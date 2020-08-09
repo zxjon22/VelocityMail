@@ -1,80 +1,37 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EC2F4227-25D2-4CFC-BE20-4F84AA924F97}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VelocityMail</RootNamespace>
-    <AssemblyName>VelocityMail</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <PackageId>VelocityMail</PackageId>
+    <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
+    <Version>1.2.0</Version>
+    <Description>Rich E-mail templating library using Castle NVelocity.</Description>
+    <Authors>Jonathan Needle</Authors>
+    <Copyright>Copyright (c) 2016, 2020 Jonathan Needle. All rights reserved.</Copyright>
+    <PackageTags>NVelocity;Email;Templating;Velocity</PackageTags>
+    <PackageProjectUrl>https://github.com/zxjon22/VelocityMail</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>https://github.com/zxjon22/VelocityMail/blob/master/Changelog.txt</PackageReleaseNotes>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSource>false</IncludeSource>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="NVelocity, Version=1.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.NVelocity.1.1.1\lib\net40\NVelocity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
+    <PackageReference Include="LibLog" Version="5.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="NVelocity" Version="[1.2, 2.0)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="NVelocity" Version="1.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="App_Packages\LibLog.4.2\LibLog.cs" />
-    <Compile Include="Configuration\GlobalVarElement.cs" />
-    <Compile Include="Configuration\MailAddressRewriteRuleCollection.cs" />
-    <Compile Include="Configuration\MailAddressRewriteRuleElement.cs" />
-    <Compile Include="Configuration\VelocityMailOptionsMapper.cs" />
-    <Compile Include="Service\MailServiceMode.cs" />
-    <Compile Include="Service\MatchMode.cs" />
-    <Compile Include="Configuration\VelocityMailSection.cs" />
-    <Compile Include="GlobalAssemblyInfo.cs" />
-    <Compile Include="MailPreparationException.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\GlobalVar.cs" />
-    <Compile Include="Service\MailAddressRewriteRule.cs" />
-    <Compile Include="Service\VelocityMailOptions.cs" />
-    <Compile Include="Service\VelocityMailService.cs" />
-    <Compile Include="VelocityEngineFactory.cs" />
-    <Compile Include="VelocityMailMessage.cs" />
-    <Compile Include="SystemNetMailMessageAdapter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="VelocityMail.nuspec" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

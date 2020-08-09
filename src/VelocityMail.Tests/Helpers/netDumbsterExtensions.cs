@@ -17,9 +17,14 @@ namespace netDumbster.smtp
         /// <returns>Decoded message body</returns>
         public static string GetDecodedBody(this SmtpMessagePart msgPart)
         {
+#if NET452
+            // NOTE: netDumbster 2.x already decodes the body data where as
+            //       the old version which supports net452 doesn't.
             var bodyBytes = Convert.FromBase64String(msgPart.BodyData);
             var body = Encoding.UTF8.GetString(bodyBytes);
-
+#else
+            var body = msgPart.BodyData;
+#endif
             return body;
         }
     }
