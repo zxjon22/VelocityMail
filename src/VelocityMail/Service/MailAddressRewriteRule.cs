@@ -8,6 +8,13 @@
     public class MailAddressRewriteRule
     {
         /// <summary>
+        /// IConfiguration.Bind use only.
+        /// </summary>
+        public MailAddressRewriteRule()
+        {
+        }
+
+        /// <summary>
         /// Creates a new <see cref="MailAddressRewriteRule"/>.
         /// </summary>
         /// <param name="pattern">RegEx to match each address against</param>

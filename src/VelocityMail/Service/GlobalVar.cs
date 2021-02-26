@@ -6,6 +6,13 @@
     public class GlobalVar
     {
         /// <summary>
+        /// IConfiguration.Bind use only.
+        /// </summary>
+        public GlobalVar()
+        {
+        }
+
+        /// <summary>
         /// Creates a new <see cref="GlobalVar"/>
         /// </summary>
         /// <param name="name">Unique name (key) of the variable</param>
