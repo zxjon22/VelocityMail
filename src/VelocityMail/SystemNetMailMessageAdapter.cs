@@ -15,7 +15,7 @@ namespace VelocityMail
     /// Creates a System.Net.Mail.MailMessage which can be sent from the SmtpClient from
     /// a VelocityMailMessage.
     /// </summary>
-    static class SystemNetMailMessageAdapter
+    public static class SystemNetMailMessageAdapter
     {
         /// <summary>
         /// Logging
@@ -31,7 +31,7 @@ namespace VelocityMail
         /// <param name="htmlEncodeBody">If true, text inserted into the HTML body should be
         /// HTML-encoded. Plain text bodies are unaffected.</param>
         /// <returns>Final MailMessage for sending</returns>
-        internal static MailMessage GetMailMessage(
+        public static MailMessage GetMailMessage(
             this VelocityMailMessage msg,
             VelocityEngine engine,
             bool htmlEncodeBody)
@@ -152,7 +152,7 @@ namespace VelocityMail
         /// <param name="ctx">VelocityContext used to populate the template</param>
         /// <param name="templateName">Name of the velocity template to use</param>
         /// <returns>The parsed template or null if no suitable template could be found</returns>
-        static string ParseLocalisedTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
+        private static string ParseLocalisedTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {
             var ci = CultureInfo.CurrentUICulture;
             var langCode = ci.TwoLetterISOLanguageName;
@@ -176,7 +176,7 @@ namespace VelocityMail
         /// <param name="ctx">The VelocityContext to use</param>
         /// <param name="templateName">The template name</param>
         /// <returns>Merged template text</returns>
-        static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
+        private static string ParseTemplate(VelocityEngine engine, VelocityContext ctx, string templateName)
         {
             try
             {
@@ -217,7 +217,7 @@ namespace VelocityMail
         /// <param name="ctx">The VelocityContext to use</param>
         /// <param name="template">The string template</param>
         /// <returns>Merged template text</returns>
-        static string ParseString(VelocityEngine engine, VelocityContext ctx, string template)
+        private static string ParseString(VelocityEngine engine, VelocityContext ctx, string template)
         {
             if (string.IsNullOrWhiteSpace(template))
             {
@@ -243,7 +243,7 @@ namespace VelocityMail
         /// </summary>
         /// <param name="sender">The EventCartridge</param>
         /// <param name="e">Event details</param>
-        static void HtmlEncodeReferenceInsertion(object sender, ReferenceInsertionEventArgs e)
+        private static void HtmlEncodeReferenceInsertion(object sender, ReferenceInsertionEventArgs e)
         {
             // NOTE: Only HTML-encode strings. Let all other objects pass through.
             var originalValue = e.OriginalValue as string;
