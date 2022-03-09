@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>VelocityMail</PackageId>
     <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
-    <Version>1.2.0-alpha0005</Version>
+    <Version>1.2.0-alpha0007</Version>
     <Description>Rich E-mail templating library using Castle NVelocity.</Description>
     <Authors>Jonathan Needle</Authors>
     <Copyright>Copyright (c) 2016, 2020 Jonathan Needle. All rights reserved.</Copyright>

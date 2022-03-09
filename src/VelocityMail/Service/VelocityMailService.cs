@@ -68,7 +68,7 @@ namespace VelocityMail.Service
         /// <summary>
         /// VelocityEngine instance used by this service
         /// </summary>
-        VelocityEngine Engine { get; set; }
+        protected VelocityEngine Engine { get; set; }
 
         /// <summary>
         /// Service operation mode. <see cref="MailServiceMode"/> for details.
