@@ -89,11 +89,18 @@ Hello Jonathan,
 This e-mail was sent from VelocityMail on 17/08/2016.
 ```
 
+## Using With .Net Core
+
+As of version `1.2`, both `net452` and `netstandard2.0` are supported.
+
+See the [Samples.NetCore](./src/Samples/Samples.NetCore/) `.Net Core 3.1` sample which uses
+the standard `Microsoft.Extensions.DependencyInjection` container for configuration.
+
 ## Other Examples
 
 See the [source](https://github.com/zxjon22/VelocityMail/tree/master/src) for more complete examples.
 
-##Contributors
+## Contributors
 
 Please use the GitHub issues tracker to report any bugs or request enhancements. Pull requests welcome.
 

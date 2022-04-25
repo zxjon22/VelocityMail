@@ -1,0 +1,6 @@
+﻿Welcome $name. This is a simple example showing today's date: $today.ToShortDateString()
+
+\$siteUrl is automatically set to the value of siteUrl in the globalVars collection in
+configuration section, if it exists.
+
+Hence you can click here: ${siteUrl}mylink
