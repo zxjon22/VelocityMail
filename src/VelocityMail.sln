@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.ConfigurationSectio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.Localisation", "Samples\Samples.Localisation\Samples.Localisation.csproj", "{E4FFACC1-4D69-4393-9F69-5DEAF018BC41}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples.NetCore", "Samples\Samples.NetCore\Samples.NetCore.csproj", "{9DEDE467-CF24-48E5-9C6D-E04F27997075}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{E4FFACC1-4D69-4393-9F69-5DEAF018BC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4FFACC1-4D69-4393-9F69-5DEAF018BC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4FFACC1-4D69-4393-9F69-5DEAF018BC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DEDE467-CF24-48E5-9C6D-E04F27997075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DEDE467-CF24-48E5-9C6D-E04F27997075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DEDE467-CF24-48E5-9C6D-E04F27997075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DEDE467-CF24-48E5-9C6D-E04F27997075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{30DC698D-F4C0-4018-8A19-FE0E519FCE1D} = {97752C9B-4C98-4381-9E02-C50809842F94}
 		{B846470B-1AE4-4607-B383-EF87B13A0A95} = {97752C9B-4C98-4381-9E02-C50809842F94}
 		{E4FFACC1-4D69-4393-9F69-5DEAF018BC41} = {97752C9B-4C98-4381-9E02-C50809842F94}
+		{9DEDE467-CF24-48E5-9C6D-E04F27997075} = {97752C9B-4C98-4381-9E02-C50809842F94}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7F85A5D-38A2-4734-9CCC-5705B394EB55}
