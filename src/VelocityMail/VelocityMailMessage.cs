@@ -141,7 +141,7 @@ namespace VelocityMail
         /// <param name="fileName">Path to the file to attach</param>
         /// <param name="mediaType">Mime type of the file. If null, application/octet-stream is
         /// used.</param>
-        /// <param name="attachmentName">MIME content-type name for the attachment.</param>
+        /// <param name="attachmentName">Suggested file name for the attachment.</param>
         /// <exception cref="FileNotFoundException">If the file was not found</exception>
         public void AttachFile(string fileName, string mediaType, string attachmentName)
         {
@@ -172,6 +172,29 @@ namespace VelocityMail
         public void AttachFile(string fileName, string mediaType)
         {
             this.AttachFile(fileName, mediaType, fileName);
+        }
+
+        /// <summary>
+        /// Attach the specified file using the supplied media type
+        /// to this TemplatedMailMessage.
+        /// </summary>
+        /// <param name="contentStream">A readable stream containing the attachment's content.</param>
+        /// <param name="mediaType">Mime type of the file. If null, application/octet-stream is used.</param>
+        /// <param name="attachmentName">Suggested file name for the attachment.</param>
+        /// <remarks>
+        /// The stream will be closed when the <see cref="VelocityMailMessage"/> is disposed.
+        /// </remarks>
+        public void AttachFile(Stream contentStream, string mediaType, string attachmentName)
+        {
+            _ = contentStream ?? throw new ArgumentNullException(nameof(contentStream));
+            _ = attachmentName ?? throw new ArgumentNullException(nameof(attachmentName));
+            mediaType ??= "application/octet-stream";
+
+            var att = new Attachment(contentStream, attachmentName, mediaType);
+            att.ContentDisposition.Inline = false;
+            att.Name = Path.GetFileName(attachmentName);
+            att.ContentDisposition.FileName = att.Name;
+            Attachments.Add(att);
         }
 
         #endregion
@@ -207,6 +230,7 @@ namespace VelocityMail
             if (!attachmentsDisposed)
             {
                 this.Attachments.ForEach(x => x.Dispose());
+                this.attachmentsDisposed = true;
             }
         }
 
