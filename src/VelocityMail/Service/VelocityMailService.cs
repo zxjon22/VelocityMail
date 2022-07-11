@@ -312,9 +312,8 @@ namespace VelocityMail.Service
                 finally
                 {
                     // Avoid Disposing the attachments as they're also in the
-                    // VelocityMailMessage AttachmentCollection. Probably not
-                    // a big deal since it's unlikely to be sent twice.
-                    msg.Attachments.Clear();
+                    // VelocityMailMessage AttachmentCollection.
+                    mmsg.Attachments.Clear();
                 }
             }
         }

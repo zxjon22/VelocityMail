@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Attachments\foo.txt" />
     <None Remove="Assets\Embedded\GlobalVars-txt.vm" />
     <None Remove="Assets\Embedded\HtmlEncoding-html.vm" />
     <None Remove="Assets\Embedded\NoHtmlEncoding-txt.vm" />
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Attachments\foo.txt" />
     <EmbeddedResource Include="Assets\Embedded\GlobalVars-txt.vm" />
     <EmbeddedResource Include="Assets\Embedded\HtmlEncoding-html.vm" />
     <EmbeddedResource Include="Assets\Embedded\NoHtmlEncoding-txt.vm" />
